@@ -43,6 +43,10 @@ operación seleccionada.
 #  Variables
 # ___________________________________________________
 
+servicefile = '20181-citibike-tripdata.csv'
+initialStation = None
+recursionLimit = 20000
+
 
 # ___________________________________________________
 #  Menu principal
@@ -51,3 +55,83 @@ operación seleccionada.
 """
 Menu principal
 """
+
+def printMenu():
+    print("\n")
+    print("*******************************************")
+    print("Bienvenido")
+    print("1- Inicializar Analizador")
+    print("2- Cargar información de buses de singapur")
+    print("3- Calcular componentes conectados")
+    print("4- Establecer estación base:")
+    print("5- Hay camino entre estacion base y estación: ")
+    print("6- Ruta de costo mínimo desde la estación base y estación: ")
+    print("7- Estación que sirve a mas rutas: ")
+    print("0- Salir")
+    print("*******************************************")
+
+
+def optionTwo():
+    print("\nCargando información de rutas de bicicletas de Nueva York ....")
+    controller.loadServices(cont, servicefile)
+    numedges = controller.totalConnections(cont)
+    numvertex = controller.totalStops(cont)
+    print('Numero de vertices: ' + str(numvertex))
+    print('Numero de arcos: ' + str(numedges))
+    print('El limite de recursion actual: ' + str(sys.getrecursionlimit()))
+    sys.setrecursionlimit(recursionLimit)
+    print('El limite de recursion se ajusta a: ' + str(recursionLimit))
+
+def optionThree():
+    Station1=input("Ingrese el id de la primera estación que quiera verficar: ")
+    Station2=input("Ingrese el id de la primera estación que quiera verficar: ")
+    print('El número de componentes conectados es: ' +
+          str(controller.connectedComponents(cont)))
+    if controller.fuertementeEnlazados(cont,Station1,Station2)==True:
+        print("Las estaciónes {0} y {1} pertenecen al mismo componente fuertemente enlazado.".format(Station1,Station2))
+    else:
+        print("Las estaciónes {0} y {1} no pertenecen al mismo componente fuertemente enlazado.".format(Station1,Station2))
+    
+
+
+while True:
+    printMenu()
+    inputs = input('Seleccione una opción para continuar\n>')
+
+    if int(inputs[0]) == 1:
+        print("\nInicializando....")
+        # cont es el controlador que se usará de acá en adelante
+        cont = controller.init()
+
+    elif int(inputs[0]) == 2:
+        executiontime = timeit.timeit(optionTwo, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+
+    elif int(inputs[0]) == 3:
+        executiontime = timeit.timeit(optionThree, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+    else:
+        sys.exit(0)
+sys.exit(0)
+"""
+    elif int(inputs[0]) == 4:
+        msg = "Estación Base: BusStopCode-ServiceNo (Ej: 75009-10): "
+        initialStation = input(msg)
+        executiontime = timeit.timeit(optionFour, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+
+    elif int(inputs[0]) == 5:
+        destStation = input("Estación destino (Ej: 15151-10): ")
+        executiontime = timeit.timeit(optionFive, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+
+    elif int(inputs[0]) == 6:
+        destStation = input("Estación destino (Ej: 15151-10): ")
+        executiontime = timeit.timeit(optionSix, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+
+    elif int(inputs[0]) == 7:
+        executiontime = timeit.timeit(optionSeven, number=1)
+        print("Tiempo de ejecución: " + str(executiontime))
+"""
+    
