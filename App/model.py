@@ -100,8 +100,8 @@ def addStop(analyzer, stopid):
     Adiciona una estación como un vertice del grafo
     """
     try:
-        if not gr.containsVertex(analyzer['conections'], stopid):
-            gr.insertVertex(analyzer['conections'], stopid)
+        if not gr.containsVertex(analyzer['connections'], stopid):
+            gr.insertVertex(analyzer['connections'], stopid)
         return analyzer
     except Exception as exp:
         error.reraise(exp, 'model:addstop')
@@ -131,6 +131,12 @@ def connectedComponents(analyzer):
 def fuertementeConectados(analyzer,Station1,Station2):
     analyzer['components'] = scc.KosarajuSCC(analyzer['connections'])
     return scc.stronglyConnected(analyzer['components'],Station1,Station2)
+    
+def totalConnections(analyzer):
+    return gr.numEdges(analyzer["connections"])
+    
+def totalStops(analyzer):
+    return gr.numVertices(analyzer["connections"])
 
 # ==============================
 # Funciones Helper

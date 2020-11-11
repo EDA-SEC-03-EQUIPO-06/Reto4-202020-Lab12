@@ -26,6 +26,7 @@
 
 import config as cf
 from App import model
+import os
 import csv
 
 """
@@ -51,7 +52,15 @@ def init():
 #  Funciones para la carga de datos y almacenamiento
 #  de datos en los modelos
 # ___________________________________________________
-def loadServices(analyzer, servicesfile):
+
+def loadServices(citibike):
+    for filename in os.listdir(cf.data_dir):
+        if filename.endswith('.csv'):
+            print('Cargando archivo: ' + filename)
+            loadFile(citibike, filename)
+    return citibike
+
+def loadFile(analyzer, servicesfile):
     """
     Carga los datos de los archivos CSV en el modelo.
     Se crea un arco entre cada par de estaciones que

@@ -43,7 +43,7 @@ operación seleccionada.
 #  Variables
 # ___________________________________________________
 
-servicefile = '20181-citibike-tripdata.csv'
+servicefile = '201801-1-citibike-tripdata (1).csv'
 initialStation = None
 recursionLimit = 20000
 
@@ -73,7 +73,7 @@ def printMenu():
 
 def optionTwo():
     print("\nCargando información de rutas de bicicletas de Nueva York ....")
-    controller.loadServices(cont, servicefile)
+    controller.loadServices(cont)
     numedges = controller.totalConnections(cont)
     numvertex = controller.totalStops(cont)
     print('Numero de vertices: ' + str(numvertex))
